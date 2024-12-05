@@ -7,7 +7,7 @@ on:
 
 jobs:
   auto_merge:
-    if: github.event.label.name == 'finished-reviewed
+    if: github.event.label.name == 'finished-reviewed'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
