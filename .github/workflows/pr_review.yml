@@ -23,6 +23,8 @@ jobs:
         run: |
           REPO=${{ github.repository }}
           gh pr edit --repo $REPO --add-assignee "@me"
+        env:
+          GITHUB_TOKEN: "${{ secrets.TOKEN }}"
               
 
       - name: automerge
