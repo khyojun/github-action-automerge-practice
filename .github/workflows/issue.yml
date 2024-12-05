@@ -13,8 +13,8 @@ jobs:
     permissions:
       issues: write
     env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        GH_REPO: ${{ github.repository }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GH_REPO: ${{ github.repository }}
 
     steps:
       - name: Add '작업시작' Label on Opened or Reopened
@@ -23,6 +23,5 @@ jobs:
 
       - name: Add '작업종료' Label on Closed
         if: ${{ github.event.action == 'closed' }}
-        run: gh issue edit ${{ github.event.issue.number }} --add-label "작업종료"
-
+        run: gh issue edit ${{ github.event.issue.number }} --label "작업종료"
 
