@@ -6,19 +6,16 @@ on:
       - opened
       - synchronize
       - reopened
+      - labeled
 
 jobs:
   auto_merge:
+    if: contains(join(github.event.pull_request.labels.*.name, ','), 'finished-reviewed')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Install GitHub CLI
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y gh
-          gh --version
 
       - name: Check PR Labels and Auto Merge
         env:
