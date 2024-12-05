@@ -3,21 +3,24 @@ name: Auto Merge By Labeled
 
 on:
   pull_request:
-    branches:
-      - main
-      - develop
+    types:  [labeled]
 
 jobs:
   auto_merge:
+    if: github.event.label.name == 'finished-reviewed
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Auto Merge Labeled
-        uses: isolomak/auto-merge-labeled@v1.0.1
-        with:
-          label: "auto-merge"
-          commit_title: "Auto-Merged By Action"
-          commit_message: "This Pr was auto merged by Github Actions script"
-          merge_method: "squash"
+      - name: Set up Github CLI
+        uses: actions/setup-gh@v3
+
+      - name: Auto Merge PR
+        env:
+          GITHUB_TOKEN: ${{ secrets.TOKEN }}
+        run: |
+          echo "Checking PR #${{ github.event.pull_request.number }}"
+          gh pr merge ${{ github.event.pull_request.number }} \
+            --admin --squash --body "This is PR was auto-merged by a github Actions" \
+            --subject "Auto-Merged By Action"
