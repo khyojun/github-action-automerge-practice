@@ -2,8 +2,7 @@ name: Auto Merge By Labeled
 
 on:
   pull_request:
-    branches:
-      - main
+    types: [labeled, unlabeled]
 
 jobs:
   auto_merge:
