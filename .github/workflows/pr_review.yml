@@ -21,8 +21,9 @@ jobs:
       - name: assign developer
         if: ${{ github.event.action=='opened' }}
         run: |
+          PR_NUMBER=${{ github.event.pull_request.number }}
           REPO=${{ github.repository }}
-          gh pr edit --repo $REPO --add-assignee "@me"
+          gh pr $PR_NUMBER edit --repo $REPO --add-assignee "@me"
         env:
           GITHUB_TOKEN: "${{ secrets.TOKEN }}"
               
