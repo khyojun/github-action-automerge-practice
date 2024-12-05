@@ -1,0 +1,23 @@
+name: Auto Merge By Labeled
+
+
+on:
+  pull_request:
+    branches:
+      - main
+      - develop
+
+jobs:
+  auto_merge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Auto Merge Labeled
+        uses: isolomak/auto-merge-labeled@v1.0.1
+        with:
+          label: "auto-merge"
+          commit_title: "Auto-Merged By Action"
+          commit_message: "This Pr was auto merged by Github Actions script"
+          merge_method: "squash"
