@@ -9,6 +9,7 @@ on:
 
 jobs:
   auto_merge:
+    if: contains(join(github.event.pull_request.labels.*.name, ','), 'finished-reviewed')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
