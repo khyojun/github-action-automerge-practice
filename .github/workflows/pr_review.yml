@@ -19,6 +19,13 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
+      - name: assign developer
+        if: ${{ github.event.action=='opened' }}
+        run: |
+          REPO=${{ github.repository }}
+          gh pr edit --repo $REPO --add-assignee "@me"
+              
+
       - name: automerge
         uses: "pascalgn/automerge-action@v0.14.3"
         env:
