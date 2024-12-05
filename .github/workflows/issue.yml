@@ -15,7 +15,7 @@ jobs:
       - name: IssueAlign
         run: |
           # PR 정보 가져오기
-          gh issue edit "$Number" --add-label "작업시작"
+          gh issue edit "${{ env.NUMBER }}" --add-label "작업시작"
           
 
         env:
