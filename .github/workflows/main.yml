@@ -1,9 +1,8 @@
 name: Auto Merge By Labeled
 
-
 on:
   pull_request:
-    types:  [labeled]
+    types: [labeled]
 
 jobs:
   auto_merge:
@@ -13,14 +12,23 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Github CLI
-        uses: actions/setup-gh@v3
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gh
+          gh --version
+
+      - name: Debug Event Payload  # 디버깅 추가
+        run: |
+          echo "Event payload:"
+          echo '${{ toJson(github.event) }}'
 
       - name: Auto Merge PR
         env:
           GITHUB_TOKEN: ${{ secrets.TOKEN }}
         run: |
           echo "Checking PR #${{ github.event.pull_request.number }}"
+          gh auth login --with-token <<< "${{ secrets.TOKEN }}"
           gh pr merge ${{ github.event.pull_request.number }} \
-            --admin --squash --body "This is PR was auto-merged by a github Actions" \
+            --admin --squash --body "This is PR was auto-merged by GitHub Actions" \
             --subject "Auto-Merged By Action"
