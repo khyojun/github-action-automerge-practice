@@ -23,7 +23,8 @@ jobs:
 
       - name: Add '작업종료' Label on Closed
         if: ${{ github.event.action == 'closed' }}
-        run: gh issue edit ${{ github.event.issue.number }} \
+        run: |
+          gh issue edit ${{ github.event.issue.number }} \
           --add-label "작업종료" \
           --remove-label "작업시작"
 
