@@ -17,6 +17,7 @@ on:
 jobs:
   automerge:
     runs-on: ubuntu-latest
+    permissions: write-all
     steps:
       - name: automerge
         uses: "pascalgn/automerge-action@v0.14.3"
