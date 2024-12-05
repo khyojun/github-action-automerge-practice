@@ -1,0 +1,24 @@
+name: Issue Align
+
+on:
+  issues:
+    types:
+      - opened
+      - reopened
+
+jobs:
+  auto_allign:
+    runs-on: ubuntu-latest
+    permissions:
+        issues: write
+    steps:
+      - name: IssueAlign
+        run: |
+          # PR 정보 가져오기
+          gh issue edit "$Number" --add-label "작업시작"
+          
+
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_REPO: ${{ github.repository }}
+          NUMBER: ${{ github.event.issue.number }}
