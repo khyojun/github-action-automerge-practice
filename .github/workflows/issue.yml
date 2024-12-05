@@ -16,6 +16,7 @@ jobs:
       - name: Add '작업시작' Label on Opened or Reopened
         if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
         run: gh issue edit ${{ github.event.issue.number }} --add-label "작업시작" --add-assignee "${{ github.event.issue.user.login }}"
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
