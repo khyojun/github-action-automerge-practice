@@ -5,21 +5,22 @@ on:
     types:
       - opened
       - reopened
+      - closed
 
 jobs:
-  auto_allign:
+  auto_align:
     runs-on: ubuntu-latest
     permissions:
-        issues: write
+      issues: write
     steps:
-      - name: IssueAlign
-        run: |
-          # PR 정보 가져오기
-          gh issue edit "${{ env.NUMBER }}" --add-label "작업시작"
-
-          
-
+      - name: Add '작업시작' Label on Opened or Reopened
+        if: ${{ github.event.action == 'opened' || github.event.action == 'reopened' }}
+        run: gh issue edit ${{ github.event.issue.number }} --add-label "작업시작" --add-assignee "${{ github.event.issue.user.login }}"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_REPO: ${{ github.repository }}
-          NUMBER: ${{ github.event.issue.number }}
+
+      - name: Add '작업종료' Label on Closed
+        if: ${{ github.event.action == 'closed' }}
+        run: gh issue edit ${{ github.event.issue.number }} --add-label "작업종료"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
